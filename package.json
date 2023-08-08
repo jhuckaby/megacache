@@ -1,5 +1,5 @@
 {
-	"name": "megacache",
+	"name": "pixl-megacache",
 	"version": "1.0.0",
 	"description": "A super-fast C++ LRU cache with Node.js wrapper.",
 	"author": "Joseph Huckaby <jhuckaby@gmail.com>",

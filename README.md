@@ -59,7 +59,7 @@ About 1,000,000 keys per second insert, and 1,200,000 keys per second read, but 
 Use [npm](https://www.npmjs.com/) to install the module locally:
 
 ```
-npm install megacache
+npm install pixl-megacache
 ```
 
 You may need to install a C++ compiler toolchain to build the source into a shared library:
@@ -73,7 +73,7 @@ You may need to install a C++ compiler toolchain to build the source into a shar
 Once you have that all setup, use `require()` to load MegaCache in your Node.js code:
 
 ```js
-const MegaCache = require('megacache');
+const MegaCache = require('pixl-megacache');
 ```
 
 # Usage
