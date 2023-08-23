@@ -810,6 +810,29 @@ module.exports = {
 			test.done();
 		},
 		
+		function LRU_peek(test) {
+			var idx, key, value, item;
+			var cache = new MegaCache();
+			
+			for (idx = 1; idx <= 10; idx++) {
+				cache.set( 'key' + idx, 'value' + idx );
+			}
+			
+			// first key should be the latest one entered
+			var key = cache.nextKey();
+			test.ok( key === "key10", "First key is not the expected key10: " + key );
+			
+			// peek a different key, make sure we get the value
+			var value = cache.peek('key5');
+			test.ok( value === "value5", "key5 does not have the expected value5: " + value );
+			
+			// first key should be unchanged
+			var key = cache.nextKey();
+			test.ok( key === "key10", "First key is not the expected key10 after peek: " + key );
+			
+			test.done();
+		},
+		
 		function LRU_keepAlive(test) {
 			var idx, idy, key, value, item;
 			var cache = new MegaCache( 10 );

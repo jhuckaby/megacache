@@ -18,6 +18,7 @@ private:
 
 	Napi::Value Set(const Napi::CallbackInfo& info);
 	Napi::Value Get(const Napi::CallbackInfo& info);
+	Napi::Value Peek(const Napi::CallbackInfo& info);
 	Napi::Value Has(const Napi::CallbackInfo& info);
 	Napi::Value Remove(const Napi::CallbackInfo& info);
 	Napi::Value Clear(const Napi::CallbackInfo& info);

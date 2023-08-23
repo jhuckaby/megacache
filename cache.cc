@@ -14,6 +14,7 @@ Napi::Object MegaCache::Init(Napi::Env env, Napi::Object exports) {
 	Napi::Function func = DefineClass(env, "MegaCache", {
 		InstanceMethod("_set", &MegaCache::Set),
 		InstanceMethod("_get", &MegaCache::Get),
+		InstanceMethod("_peek", &MegaCache::Peek),
 		InstanceMethod("_has", &MegaCache::Has),
 		InstanceMethod("_remove", &MegaCache::Remove),
 		InstanceMethod("clear", &MegaCache::Clear),
@@ -84,6 +85,26 @@ Napi::Value MegaCache::Get(const Napi::CallbackInfo& info) {
 	MH_KLEN_T keyLength = (MH_KLEN_T)keyBuf.Length();
 	
 	Response resp = this->hash->fetch( key, keyLength );
+	
+	if (resp.result == MH_OK) {
+		Napi::Buffer<unsigned char> valueBuf = Napi::Buffer<unsigned char>::Copy( env, resp.content, resp.contentLength );
+		if (!valueBuf) return env.Undefined();
+		
+		if (resp.flags) valueBuf.Set( "flags", (double)resp.flags );
+		return valueBuf;
+	}
+	else return env.Undefined();
+}
+
+Napi::Value MegaCache::Peek(const Napi::CallbackInfo& info) {
+	// fetch value given key, do not promote
+	Napi::Env env = info.Env();
+	
+	Napi::Buffer<unsigned char> keyBuf = info[0].As<Napi::Buffer<unsigned char>>();
+	unsigned char *key = keyBuf.Data();
+	MH_KLEN_T keyLength = (MH_KLEN_T)keyBuf.Length();
+	
+	Response resp = this->hash->peek( key, keyLength );
 	
 	if (resp.result == MH_OK) {
 		Napi::Buffer<unsigned char> valueBuf = Napi::Buffer<unsigned char>::Copy( env, resp.content, resp.contentLength );

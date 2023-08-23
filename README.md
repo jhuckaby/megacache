@@ -318,6 +318,20 @@ let value = cache.get("key1");
 
 If the key is not found, `get()` will return `undefined`.
 
+## peek
+
+```
+MIXED peek( KEY )
+```
+
+Fetch a value given a key, similar to [get()](#get), but do **not** promote the key to the front of the LRU list.  Since the value data type is stored internally as a flag with the raw data, this is used to convert the buffer back to the original type when the key is fetched.  So if you store a string then fetch it, it'll come back as a string.  Example use:
+
+```js
+let value = cache.peek("key1");
+```
+
+If the key is not found, `peek()` will return `undefined`.
+
 ## has
 
 ```

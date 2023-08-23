@@ -88,6 +88,43 @@ MegaCache.prototype.get = function(key) {
 	return value;
 };
 
+MegaCache.prototype.peek = function(key) {
+	// fetch value given key, do not promote, auto-convert back to original format
+	var keyBuf = Buffer.isBuffer(key) ? key : Buffer.from(''+key, 'utf8');
+	if (!keyBuf.length) throw new Error("Key must have length");
+	
+	var value = this._peek( keyBuf );
+	if (!value || !value.flags) return value;
+	
+	switch (value.flags) {
+		case MH_TYPE_NULL:
+			value = null;
+		break;
+		
+		case MH_TYPE_OBJECT: 
+			value = JSON.parse( value.toString() ); 
+		break;
+		
+		case MH_TYPE_NUMBER:
+			value = value.readDoubleBE();
+		break;
+		
+		case MH_TYPE_BIGINT:
+			value = value.readBigInt64BE();
+		break;
+		
+		case MH_TYPE_BOOLEAN:
+			value = (value.readUInt8() == 1) ? true : false;
+		break;
+		
+		case MH_TYPE_STRING:
+			value = value.toString();
+		break;
+	}
+	
+	return value;
+};
+
 MegaCache.prototype.has = function(key) {
 	// check existence of key
 	var keyBuf = Buffer.isBuffer(key) ? key : Buffer.from(''+key, 'utf8');
