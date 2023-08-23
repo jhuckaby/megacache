@@ -22,6 +22,7 @@
 - [API](#api)
 	* [set](#set)
 	* [get](#get)
+	* [peek](#peek)
 	* [has](#has)
 	* [delete](#delete)
 	* [clear](#clear)
