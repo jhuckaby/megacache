@@ -1,6 +1,6 @@
 {
 	"name": "pixl-megacache",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A super-fast C++ LRU cache with Node.js wrapper.",
 	"author": "Joseph Huckaby <jhuckaby@gmail.com>",
 	"homepage": "https://github.com/jhuckaby/megacache",
@@ -21,10 +21,10 @@
 	"gypfile": true,
 	"dependencies": {
 		"bindings": "^1.5.0",
-		"node-addon-api": "^7.0.0"
+		"node-addon-api": "^8.7.0"
 	},
 	"devDependencies": {
-		"pixl-unit": "^1.0.0"
+		"pixl-unit": "^2.0.0"
 	},
 	"scripts": {
 		"test": "pixl-unit test.js"
